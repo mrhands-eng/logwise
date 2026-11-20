@@ -253,8 +253,15 @@ class WorklogRepository @Inject constructor(
         }
         Result.success(attrs)
     } catch (t: Throwable) {
-        appLogger.e("Worklogs", "getWorkAttributes failed: ${t.message}", t)
-        Result.failure(Exception(NetworkErrorMapper.toMessage(t), t))
+        // This Jira DC build returns 404 for work-attributes; worklogs still work with empty attrs.
+        val code = (t as? retrofit2.HttpException)?.code()
+        if (code == 404 || code == 405) {
+            appLogger.i("Worklogs", "Work attributes endpoint unavailable ($code) — treating as none")
+            Result.success(emptyList())
+        } else {
+            appLogger.e("Worklogs", "getWorkAttributes failed: ${t.message}", t)
+            Result.failure(Exception(NetworkErrorMapper.toMessage(t), t))
+        }
     }
 
     suspend fun copyDay(from: LocalDate, to: LocalDate, worklogs: List<Worklog>): Result<Int> {

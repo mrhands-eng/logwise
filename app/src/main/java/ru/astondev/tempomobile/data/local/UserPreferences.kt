@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import ru.astondev.tempomobile.domain.AppIcon
 import ru.astondev.tempomobile.domain.AppPalette
 import ru.astondev.tempomobile.domain.AppSettings
 import ru.astondev.tempomobile.domain.IssueRef
@@ -66,6 +67,8 @@ class UserPreferences @Inject constructor(
                 ?: ThemeMode.System,
             palette = prefs[KEY_PALETTE]?.let { runCatching { AppPalette.valueOf(it) }.getOrNull() }
                 ?: AppPalette.Forest,
+            appIcon = prefs[KEY_APP_ICON]?.let { runCatching { AppIcon.valueOf(it) }.getOrNull() }
+                ?: AppIcon.ForestDark,
             hideWeekends = prefs[KEY_HIDE_WEEKENDS] ?: true,
             dailyTargetHours = (prefs[KEY_DAILY_TARGET_HOURS] ?: 8).coerceIn(1, 24),
             defaultDayStartHour = (prefs[KEY_DAY_START_HOUR] ?: 9).coerceIn(0, 23),
@@ -127,6 +130,10 @@ class UserPreferences @Inject constructor(
         context.dataStore.edit { it[KEY_PALETTE] = palette.name }
     }
 
+    suspend fun setAppIcon(icon: AppIcon) {
+        context.dataStore.edit { it[KEY_APP_ICON] = icon.name }
+    }
+
     suspend fun setHideWeekends(hide: Boolean) {
         context.dataStore.edit { it[KEY_HIDE_WEEKENDS] = hide }
     }
@@ -165,6 +172,7 @@ class UserPreferences @Inject constructor(
         private val KEY_ATTRIBUTE_VALUES = stringPreferencesKey("attribute_values_json")
         private val KEY_THEME_MODE = stringPreferencesKey("theme_mode")
         private val KEY_PALETTE = stringPreferencesKey("palette")
+        private val KEY_APP_ICON = stringPreferencesKey("app_icon")
         private val KEY_HIDE_WEEKENDS = booleanPreferencesKey("hide_weekends")
         private val KEY_DAILY_TARGET_HOURS = intPreferencesKey("daily_target_hours")
         private val KEY_DAY_START_HOUR = intPreferencesKey("day_start_hour")

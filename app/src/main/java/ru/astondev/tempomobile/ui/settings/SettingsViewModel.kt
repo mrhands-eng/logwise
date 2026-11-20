@@ -14,9 +14,12 @@ import ru.astondev.tempomobile.BuildConfig
 import ru.astondev.tempomobile.data.local.UserPreferences
 import ru.astondev.tempomobile.data.repo.AuthRepository
 import ru.astondev.tempomobile.data.repo.IssueRepository
+import ru.astondev.tempomobile.domain.AppIcon
 import ru.astondev.tempomobile.domain.AppPalette
 import ru.astondev.tempomobile.domain.IssueRef
 import ru.astondev.tempomobile.domain.ThemeMode
+import ru.astondev.tempomobile.util.AppIconManager
+import ru.astondev.tempomobile.util.AppIconManager.Companion.label
 import ru.astondev.tempomobile.util.AppLogger
 import java.io.File
 import javax.inject.Inject
@@ -35,6 +38,7 @@ data class SettingsUiState(
     val shareLogRequest: File? = null,
     val themeMode: ThemeMode = ThemeMode.System,
     val palette: AppPalette = AppPalette.Forest,
+    val appIcon: AppIcon = AppIcon.ForestDark,
     val hideWeekends: Boolean = true,
     val dailyTargetHours: Int = 8,
     val dayStartHour: Int = 9,
@@ -48,6 +52,7 @@ class SettingsViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val issueRepository: IssueRepository,
     private val userPreferences: UserPreferences,
+    private val appIconManager: AppIconManager,
     private val appLogger: AppLogger,
 ) : ViewModel() {
 
@@ -72,6 +77,7 @@ class SettingsViewModel @Inject constructor(
             issueInput = if (s.issueInput.isBlank() && issue != null) issue.key else s.issueInput,
             themeMode = settings.themeMode,
             palette = settings.palette,
+            appIcon = settings.appIcon,
             hideWeekends = settings.hideWeekends,
             dailyTargetHours = settings.dailyTargetHours,
             dayStartHour = settings.defaultDayStartHour,
@@ -130,6 +136,16 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             userPreferences.setPalette(palette)
             _state.update { it.copy(message = "Палитра: ${palette.label()}") }
+        }
+    }
+
+    fun setAppIcon(icon: AppIcon) {
+        viewModelScope.launch {
+            userPreferences.setAppIcon(icon)
+            appIconManager.apply(icon)
+            _state.update {
+                it.copy(message = "Иконка: ${icon.label()}. На лаунчере может обновиться через пару секунд.")
+            }
         }
     }
 

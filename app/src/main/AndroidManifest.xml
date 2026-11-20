@@ -10,9 +10,9 @@
     <application
         android:name=".TempoApp"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logwise_forest_dark"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_logwise_forest_dark"
         android:supportsRtl="true"
         android:theme="@style/Theme.Logwise"
         android:usesCleartextTraffic="false">
@@ -20,12 +20,91 @@
             android:name=".MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.Logwise">
+            android:theme="@style/Theme.Logwise" />
+
+        <activity-alias
+            android:name=".launcher.IconForestDark"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@drawable/ic_logwise_forest_dark"
+            android:roundIcon="@drawable/ic_logwise_forest_dark"
+            android:label="@string/app_name"
+            android:targetActivity=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".launcher.IconForestLight"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_logwise_forest_light"
+            android:roundIcon="@drawable/ic_logwise_forest_light"
+            android:label="@string/app_name"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".launcher.IconOcean"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_logwise_ocean"
+            android:roundIcon="@drawable/ic_logwise_ocean"
+            android:label="@string/app_name"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".launcher.IconSlate"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_logwise_slate"
+            android:roundIcon="@drawable/ic_logwise_slate"
+            android:label="@string/app_name"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".launcher.IconEmber"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_logwise_ember"
+            android:roundIcon="@drawable/ic_logwise_ember"
+            android:label="@string/app_name"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".launcher.IconBars"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_logwise_bars"
+            android:roundIcon="@drawable/ic_logwise_bars"
+            android:label="@string/app_name"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
 
         <service
             android:name=".ui.timer.TimerService"

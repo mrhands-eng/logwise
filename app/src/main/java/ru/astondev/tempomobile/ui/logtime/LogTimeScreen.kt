@@ -286,14 +286,7 @@ fun LogTimeScreen(
                 }
             }
 
-            if (state.attributesError != null) {
-                Spacer(Modifier.height(12.dp))
-                Text(
-                    text = "Атрибуты Tempo недоступны: ${state.attributesError}",
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall,
-                )
-            }
+            // attributesError is only set for unexpected failures; 404 = no attrs on this server.
 
             if (state.attributes.isNotEmpty()) {
                 Spacer(Modifier.height(16.dp))
